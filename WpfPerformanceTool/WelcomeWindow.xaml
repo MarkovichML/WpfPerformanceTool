@@ -1,0 +1,17 @@
+﻿<Window x:Class="Monitor.WelcomeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Monitor"
+        mc:Ignorable="d"
+        Title="WelcomeWindow" Height="167.213" Width="586.065">
+    <Grid>
+        <Button Content="Open Monitor" HorizontalAlignment="Left" Margin="28,30,0,0" VerticalAlignment="Top" Width="145" Height="62" Click="Button_Click"/>
+        <CheckBox Name="totalMemoryBox" Content="Total Memory" HorizontalAlignment="Left" Margin="276,30,0,0" VerticalAlignment="Top"/>
+        <CheckBox Name="totalCpuBox" Content="Total CPU" HorizontalAlignment="Left" Margin="276,77,0,0" VerticalAlignment="Top"/>
+        <CheckBox Name="processMemoryBox" Content="Process Memory" HorizontalAlignment="Left" Margin="424,77,0,0" VerticalAlignment="Top"/>
+        <CheckBox Name="processCpuBox" Content="Process CPU" HorizontalAlignment="Left" Margin="424,33,0,0" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>
