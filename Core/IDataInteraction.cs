@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Core
 {
-    public interface IDataInteraction
+    public interface IDataInteraction<T>
     {
-        void WriteData(LogFile logFile, List<string> time, List<double> memoryCounters, List<double> cpuCounters, List<int> totalCpu, List<int> totalMemory);
-        void WriteData(LogFile logFile, List<string> time, List<double> processCounters, List<int> totalCounters);
-        List<double> ReadCpu(LogFile logFile);
-        List<DateTime> ReadTime(LogFile logFile);
-        List<double> ReadMemory(LogFile logFile);
-        List<int> ReadTotalCpu(LogFile logFile);
-        List<int> ReadTotalMemory(LogFile logFile);
+        void WriteData(List<T> data);
+
+        List<T> ReadData();
     }
 }

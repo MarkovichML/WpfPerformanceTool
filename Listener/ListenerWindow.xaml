@@ -12,22 +12,20 @@
         <CheckBox Name="cpuCheckBox" Content="CPU" HorizontalAlignment="Left" Margin="566,41,0,0" VerticalAlignment="Top" Checked="cpuCheckBox_Checked"/>
         <ListBox Name="ListOfSelectedProcesses" HorizontalAlignment="Left" Height="275" Margin="20,134,0,0" VerticalAlignment="Top" Width="762"/>
         <ComboBox Name="ProcessBox" HorizontalAlignment="Left" Margin="198,30,0,0" VerticalAlignment="Top" Width="193" Height="36"/>
-        <ListView Name="ListViewProcesses" HorizontalAlignment="Left" Height="251" Margin="30,144,0,0" VerticalAlignment="Top" Width="739">
-            <ListView.View>
-                <GridView x:Name="ListGrid">
-                    <GridViewColumn Header="Process Name" DisplayMemberBinding="{Binding Path=ProcessName}" Width="200"/>
-                    <GridViewColumn Header="Process ID" DisplayMemberBinding="{Binding Path=ProcessID}" Width="200"/>
-                    <GridViewColumn Header="Process Status" DisplayMemberBinding="{Binding Path=ProcessStatus}" Width="200"/>
-                    <GridViewColumn Header="Stopper" DisplayMemberBinding="{Binding Path=ProcessStopper}">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button Content="Stop" Background="Red" FontWeight="Bold" VerticalAlignment="Center" Click="Stop_Click" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <DataGrid Name="DataGridProcesses" HorizontalAlignment="Left" Height="251" Margin="30,144,0,0" VerticalAlignment="Top" Width="739">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Process Name" Binding="{Binding Path=ProcessName}" Width="200"/>
+                <DataGridTextColumn Header="Process ID" Binding="{Binding Path=ProcessID}" Width="200"/>
+                <DataGridTextColumn Header="Process Status" Binding="{Binding Path=ProcessStatus}" Width="200"/>
+                <DataGridTextColumn Header="Process Stopper" Binding="{Binding Path=ProcessStopper}"   Width="200">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <EventSetter Event="PreviewMouseLeftButtonDown" Handler="DataGridCell_MouseLeftButtonDown"/>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
 
     </Grid>
 </Window>

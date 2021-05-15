@@ -1,20 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.IO;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
 using Core;
+using System.Collections.Generic;
+using System.Windows.Controls;
 
 namespace Listener
 {
@@ -23,36 +15,38 @@ namespace Listener
     /// </summary>
     public partial class ListenerWindow : Window
     {
-        Listen listener = new Listen();
+        ProcessListener listener = new ProcessListener();
         LogFile logFile;
-        
+        Process p;
+
+
+
+
         public ListenerWindow()
         {
             InitializeComponent();
             ListProcessesBox();
             AddingButton.IsEnabled = false;
-            
+
         }
         private void ListProcessesBox()
         {
             Process[] processCollection = Process.GetProcesses();
             foreach (Process p in processCollection)
             {
-                ProcessBox.Items.Add(p.Id);
+                ProcessBox.Items.Add(p.ProcessName + " " + p.Id);
             }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Process p = Process.GetProcessById((int)ProcessBox.SelectedItem);
+            string[] process = ProcessBox.SelectedItem.ToString().Split(' ').ToArray();
+            p = Process.GetProcessById(int.Parse(process[1]));
             logFile = OpenFile(logFile);
-            listener.Subscribe(logFile, p,cpuCheckBox.IsEnabled,memoryCheckBox.IsEnabled);
-            ListViewProcesses.Items.Add(new { ProcessName = p.ProcessName, ProcessID = p.Id, ProcessStatus = "In progress", ProcessStopper = new System.Windows.Controls.Button() }) ;
-        }
+            //listener.Subscribe(logFile, p, (bool)cpuCheckBox.IsChecked, (bool)memoryCheckBox.IsChecked);
+            DataGridProcesses.Items.Add(new { ProcessName = p.ProcessName, ProcessID = p.Id, ProcessStatus = "In progress", ProcessStopper = "StopClick"});
+            ProcessBox.Items.Remove(ProcessBox.SelectedItem);
 
-        private void Stop_Click(object sender, RoutedEventArgs e)
-        {
-            
         }
         public LogFile OpenFile(LogFile logFile)
         {
@@ -76,6 +70,15 @@ namespace Listener
         {
             if (cpuCheckBox.IsEnabled)
                 AddingButton.IsEnabled = true;
+        }
+        private void DataGridCell_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            listener.Unsubscribe(p);
+            string process  = DataGridProcesses.SelectedItem.ToString();
+            string[] arrDetailOfProc = process.Split(' ').ToArray();
+            ProcessBox.Items.Add($"{arrDetailOfProc[0]} {arrDetailOfProc[1]}");
+            DataGridProcesses.Items.Remove(DataGridProcesses.SelectedItem);
+
         }
     }
 }

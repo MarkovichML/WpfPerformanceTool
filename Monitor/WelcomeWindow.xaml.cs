@@ -31,7 +31,7 @@ namespace Monitor
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             logFile = OpenFile(logFile);
-            MainMonitorWindow mw = new MainMonitorWindow(logFile, totalCpuBox.IsEnabled, totalMemoryBox.IsEnabled, processCpuBox.IsEnabled, processMemoryBox.IsEnabled);
+            MainMonitorWindow mw = new MainMonitorWindow(logFile, (bool)totalMemoryBox.IsChecked, (bool)totalCpuBox.IsChecked, (bool)processMemoryBox.IsChecked, (bool)processCpuBox.IsChecked);
             mw.Show();
             
         }
